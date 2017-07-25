@@ -10,7 +10,7 @@
  *
  * @flow
  */
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, Menu } from 'electron';
 import MenuBuilder from './menu';
 
 let mainWindow = null;
@@ -84,6 +84,24 @@ app.on('ready', async () => {
     mainWindow = null;
   });
 
-  const menuBuilder = new MenuBuilder(mainWindow);
-  menuBuilder.buildMenu();
+  /* const menuBuilder = new MenuBuilder(mainWindow);
+  menuBuilder.buildMenu();*/
+  setupDevelopmentEnvironment(mainWindow);
 });
+
+
+const setupDevelopmentEnvironment = (window: BrowserWindow) => {
+  window.openDevTools();
+  window.webContents.on('context-menu', (e, props) => {
+    const { x, y } = props;
+
+    Menu
+      .buildFromTemplate([{
+        label: 'Inspect element',
+        click: () => {
+          window.inspectElement(x, y);
+        }
+      }])
+      .popup(window);
+  });
+};

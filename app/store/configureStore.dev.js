@@ -1,9 +1,14 @@
 import { createStore, applyMiddleware, compose } from 'redux';
-import thunk from 'redux-thunk';
+// import thunk from 'redux-thunk';
+import { createEpicMiddleware } from 'redux-observable';
 import { createHashHistory } from 'history';
 import { routerMiddleware, routerActions } from 'react-router-redux';
 import { createLogger } from 'redux-logger';
-import rootReducer from '../reducers';
+import { rootEpic, rootReducer } from '../ducks';
+// import rootReducer from '../reducers';
+// actions
+import { actions as authActions } from '../ducks/auth';
+
 import * as counterActions from '../actions/counter';
 import type { counterStateType } from '../reducers/counter';
 
@@ -15,7 +20,11 @@ const configureStore = (initialState?: counterStateType) => {
   const enhancers = [];
 
   // Thunk Middleware
-  middleware.push(thunk);
+  // middleware.push(thunk);
+
+  // Redux Observable
+  const epic = createEpicMiddleware(rootEpic);
+  middleware.push(epic);
 
   // Logging Middleware
   const logger = createLogger({
@@ -28,8 +37,10 @@ const configureStore = (initialState?: counterStateType) => {
   const router = routerMiddleware(history);
   middleware.push(router);
 
+  console.log('authActions', authActions);
   // Redux DevTools Configuration
   const actionCreators = {
+    ...authActions,
     ...counterActions,
     ...routerActions,
   };
@@ -51,8 +62,8 @@ const configureStore = (initialState?: counterStateType) => {
   const store = createStore(rootReducer, initialState, enhancer);
 
   if (module.hot) {
-    module.hot.accept('../reducers', () =>
-      store.replaceReducer(require('../reducers')) // eslint-disable-line global-require
+    module.hot.accept('../ducks', () =>
+      store.replaceReducer(require('../ducks')) // eslint-disable-line global-require
     );
   }
 
