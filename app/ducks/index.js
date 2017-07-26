@@ -5,6 +5,6 @@ import authReducer, { loginEpic } from './auth';
 export const rootEpic = combineEpics(
   loginEpic
 );
-export const rootReducer = combineReducers(
+export const rootReducer = combineReducers({
   authReducer
-);
+});

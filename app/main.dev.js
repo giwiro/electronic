@@ -11,7 +11,7 @@
  * @flow
  */
 import { app, BrowserWindow, Menu } from 'electron';
-import MenuBuilder from './menu';
+// import MenuBuilder from './menu';
 
 let mainWindow = null;
 
