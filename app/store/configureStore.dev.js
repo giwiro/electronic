@@ -37,7 +37,6 @@ const configureStore = (initialState?: counterStateType) => {
   const router = routerMiddleware(history);
   middleware.push(router);
 
-  console.log('authActions', authActions);
   // Redux DevTools Configuration
   const actionCreators = {
     ...authActions,

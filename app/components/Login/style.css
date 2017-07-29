@@ -1,0 +1,28 @@
+.main_wrap {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.draggable {
+  -webkit-app-region: drag;
+  align-self: flex-start;
+  width: 100%;
+  height: 20px;
+}
+
+.form_wrap {
+  width: 600px;
+  margin: auto;
+}
+
+.form {
+  padding: 40px 60px 60px;
+  background: whitesmoke;
+}
+
+.button {
+  width: 100%;
+}

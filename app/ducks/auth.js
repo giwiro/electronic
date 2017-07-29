@@ -14,7 +14,7 @@ type actionType = {
 };
 
 export type authStateType = {
-  +is_auth?: boolean,
+  +isAuth?: boolean,
   +error?: any,
   +user?: any
 };
@@ -58,7 +58,7 @@ export default function reducer(state: authStateType = {}, action: actionType): 
   switch (action.type) {
     case AUTH_REQUEST:
       return {
-        is_auth: true
+        isAuth: true
       };
     case AUTH_SUCCESS:
       return {
@@ -78,6 +78,7 @@ export function loginEpic(action$: any) {
   return action$.ofType(AUTH_REQUEST)
     .mergeMap(() =>
       Rx.Observable.of({ id: 'asdasd', name: 'giwiro' })
+        .delay(2000)
         .map(user => loginSuccess(user))
         .catch(error => Rx.Observable.of(loginError(error)))
     );

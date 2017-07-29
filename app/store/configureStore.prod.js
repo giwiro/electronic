@@ -11,7 +11,7 @@ const epic = createEpicMiddleware(rootEpic);
 const router = routerMiddleware(history);
 const enhancer = applyMiddleware(epic, router);
 
-function configureStore(initialState?: any) {
+function configureStore(initialState?: {}) {
   return createStore(rootReducer, initialState, enhancer);
 }
 
